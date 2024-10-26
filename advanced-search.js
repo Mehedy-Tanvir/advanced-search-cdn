@@ -3,7 +3,7 @@ const fetchDataAndRenderItems = async () => {
   try {
     const siteId = document.querySelector("html").getAttribute("data-wf-site");
     const response = await fetch(
-      `http://localhost:3004/api/search/getSearchSettingsAndItems/${siteId}`
+      `https://advanced-search-backend-production.up.railway.app/api/search/getSearchSettingsAndItems/${siteId}`
     );
 
     // Check if the response is okay
@@ -109,7 +109,7 @@ const renderItems = (data) => {
     const searchTerm = searchInput.value;
     const siteId = document.querySelector("html").getAttribute("data-wf-site");
     // Send search request to API
-    const apiUrl = `http://localhost:3004/api/search/getSearchedItems/${siteId}?searchedItem=${encodeURIComponent(
+    const apiUrl = `https://advanced-search-backend-production.up.railway.app/api/search/getSearchedItems/${siteId}?searchedItem=${encodeURIComponent(
       searchTerm
     )}`;
 
