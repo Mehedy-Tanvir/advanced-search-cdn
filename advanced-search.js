@@ -28,7 +28,7 @@ const q = async () => {
     const m = a.data.searchSettings;
     a.data.items.results, console.log("search settings", a.data);
     const n = document.getElementById("flowappz-asa-item-container"),
-      s = document.querySelector(".flowappz-asa-card");
+      s = document.getElementById("flowappz-asa-card");
     if (!n || !s) {
       console.error("Container or card template not found");
       return;
