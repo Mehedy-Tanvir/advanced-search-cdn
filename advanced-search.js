@@ -1,66 +1,66 @@
-const q = async () => {
-    var a;
+const $ = async () => {
+    var s;
     try {
-      console.log("This is cdn");
+      // console.log("This is cdn");
       const e =
-        (a = document.querySelector("html")) == null
+        (s = document.querySelector("html")) == null
           ? void 0
-          : a.getAttribute("data-wf-site");
+          : s.getAttribute("data-wf-site");
       if (!e) throw new Error("Site ID not found");
-      const m = await fetch(
+      const h = await fetch(
         `https://advanced-search-backend-production.up.railway.app/api/search/getSearchSettingsAndItems/${e}`
       );
-      if (!m.ok) throw new Error("Failed to fetch data");
-      const n = await m.json();
+      if (!h.ok) throw new Error("Failed to fetch data");
+      const n = await h.json();
       console.log("search settings", n.data);
-      const s = await fetch(
+      const l = await fetch(
         `https://advanced-search-backend-production.up.railway.app/api/search/getSearchResultSettings/${e}`
       );
-      if (!s.ok) throw new Error("Failed to fetch search result settings");
-      const p = (await s.json()).data;
-      L(n, p);
+      if (!l.ok) throw new Error("Failed to fetch search result settings");
+      const f = (await l.json()).data;
+      b(n, f);
     } catch (e) {
       console.error("Error fetching data:", e);
     }
   },
-  L = (a, e) => {
+  b = (s, e) => {
     console.log("search result settings", e);
-    const m = a.data.searchSettings;
-    a.data.items.results, console.log("search settings", a.data);
+    const h = s.data.searchSettings;
+    s.data.items.results, console.log("search settings", s.data);
     const n = document.getElementById("flowappz-asa-item-container"),
-      s = document.getElementById("flowappz-asa-card");
-    if (!n || !s) {
+      l = document.getElementById("flowappz-asa-card");
+    if (!n || !l) {
       console.error("Container or card template not found");
       return;
     }
-    (n.innerHTML = ""), (s.style.display = "none"), (n.style.display = "none");
-    const h = document.getElementById("flowappz-asa-search-button");
-    h && !e.showSearchButton && (h.style.display = "none");
-    const p = document.getElementById("flowappz-asa-search-input"),
-      w = async () => {
-        var u;
+    (n.innerHTML = ""), (l.style.display = "none"), (n.style.display = "none");
+    const y = document.getElementById("flowappz-asa-search-button");
+    y && !e.showSearchButton && (y.style.display = "none");
+    const f = document.getElementById("flowappz-asa-search-input"),
+      E = async () => {
+        var g;
         n.innerHTML = "";
-        const y = p.value,
-          g =
-            (u = document.querySelector("html")) == null
+        const a = f.value,
+          w =
+            (g = document.querySelector("html")) == null
               ? void 0
-              : u.getAttribute("data-wf-site");
-        if (!g) return;
-        const I = `https://advanced-search-backend-production.up.railway.app/api/search/getSearchedItems/${g}?searchedItem=${encodeURIComponent(
-          y
+              : g.getAttribute("data-wf-site");
+        if (!w) return;
+        const u = `https://advanced-search-backend-production.up.railway.app/api/search/getSearchedItems/${w}?searchedItem=${encodeURIComponent(
+          a
         )}`;
         try {
-          const f = await fetch(I);
-          if (!f.ok) throw new Error(`Error: ${f.status}`);
-          const x = (await f.json()).data;
+          const m = await fetch(u);
+          if (!m.ok) throw new Error(`Error: ${m.status}`);
+          const x = (await m.json()).data;
           (n.style.display = "none"),
             x.slice(0, e.itemLimit).forEach((r) => {
-              const i = m.find((o) => o.itemCollection === r.index);
+              const i = h.find((o) => o.itemCollection === r.index);
               if (i)
                 if (i.dataField)
                   try {
                     const o = JSON.parse(i.dataField),
-                      c = s.cloneNode(!0);
+                      c = l.cloneNode(!0);
                     if (
                       ((n.style.display = "flex"),
                       (c.style.display = "flex"),
@@ -70,8 +70,8 @@ const q = async () => {
                         '[flowappz-asa-data-field="title"]'
                       );
                       if (t) {
-                        const d = r[o.title].replace(/<\/?[^>]+(>|$)/g, "");
-                        t.innerText = d;
+                        const p = r[o.title].replace(/<\/?[^>]+(>|$)/g, "");
+                        t.innerText = p;
                       }
                     }
                     if (
@@ -95,17 +95,17 @@ const q = async () => {
                         '[flowappz-asa-data-field="description"]'
                       );
                       if (t) {
-                        const d = r[o.description].replace(
+                        const p = r[o.description].replace(
                           /<\/?[^>]+(>|$)/g,
                           ""
                         );
                         if (e != null && e.descriptionLength) {
-                          const T =
-                            d.length > e.descriptionLength
-                              ? d.slice(0, e.descriptionLength) + "..."
-                              : d;
-                          t.innerText = T;
-                        } else t.innerText = d;
+                          const L =
+                            p.length > e.descriptionLength
+                              ? p.slice(0, e.descriptionLength) + "..."
+                              : p;
+                          t.innerText = L;
+                        } else t.innerText = p;
                       }
                     }
                     if (o.image && r[o.image]) {
@@ -114,12 +114,12 @@ const q = async () => {
                       );
                       t && ((t.src = r[o.image].url), (t.srcset = ""));
                     }
-                    const E = c,
-                      l = r[o.link];
-                    l &&
-                      (typeof l == "string"
-                        ? (E.href = l)
-                        : typeof l == "object" && l.url && (E.href = l.url)),
+                    const I = c,
+                      d = r[o.link];
+                    d &&
+                      (typeof d == "string"
+                        ? (I.href = d)
+                        : typeof d == "object" && d.url && (I.href = d.url)),
                       n.appendChild(c);
                   } catch (o) {
                     console.error("Error parsing fieldData:", o);
@@ -129,22 +129,36 @@ const q = async () => {
                     `dataField is undefined or empty for itemCollection: ${i.itemCollection}`
                   );
             });
-        } catch (f) {
-          console.error("Error fetching search results:", f);
+        } catch (m) {
+          console.error("Error fetching search results:", m);
         }
       };
-    h.addEventListener("click", async (y) => {
-      y.preventDefault(), await w();
-    });
-    const C = async () => {
+    function C(a, w) {
+      let u;
+      return function (...g) {
+        clearTimeout(u), (u = setTimeout(() => a.apply(this, g), w));
+      };
+    }
+    y.addEventListener(
+      "click",
+      C(async (a) => {
+        a.preventDefault(), await E();
+      }, 500)
+    );
+    const T = async () => {
       console.log("search input changed"),
         e != null &&
           e.autoComplete &&
           e != null &&
           e.minCharacters &&
-          p.value.length >= e.minCharacters &&
-          (await w());
+          f.value.length >= e.minCharacters &&
+          (await E());
     };
-    p.addEventListener("input", C);
+    f.addEventListener(
+      "input",
+      C(async (a) => {
+        a.preventDefault(), await T();
+      }, 500)
+    );
   };
-q();
+$();
