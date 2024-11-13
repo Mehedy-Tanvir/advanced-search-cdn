@@ -1,6 +1,5 @@
-const BaseUrl = "https://advanced-search-backend-production.up.railway.app";
-
-const L = async () => {
+const C = "https://advanced-search-backend-production.up.railway.app",
+  L = async () => {
     var s;
     try {
       console.log("This is cdn");
@@ -9,71 +8,67 @@ const L = async () => {
           ? void 0
           : s.getAttribute("data-wf-site");
       if (!e) throw new Error("Site ID not found");
-      const h = await fetch(
-        `${BaseUrl}/api/search/getSearchSettingsAndItems/${e}`
-      );
+      const h = await fetch(`${C}/api/search/getSearchSettingsAndItems/${e}`);
       if (!h.ok) throw new Error("Failed to fetch data");
-      const n = await h.json();
-      console.log("search settings", n.data);
-      const l = await fetch(
-        `${BaseUrl}/api/search/getSearchResultSettings/${e}`
-      );
+      const r = await h.json();
+      console.log("search settings", r.data);
+      const l = await fetch(`${C}/api/search/getSearchResultSettings/${e}`);
       if (!l.ok) throw new Error("Failed to fetch search result settings");
-      const m = (await l.json()).data;
-      $(n, m);
+      const d = (await l.json()).data;
+      b(r, d);
     } catch (e) {
       console.error("Error fetching data:", e);
     }
   },
-  $ = (s, e) => {
+  b = (s, e) => {
     console.log("search result settings", e);
     const h = s.data.searchSettings;
     s.data.items.results, console.log("search settings", s.data);
-    const n = document.getElementById("flowappz-asa-item-container"),
+    const r = document.getElementById("flowappz-asa-item-container"),
       l = document.getElementById("flowappz-asa-card");
-    if (!n || !l) {
+    if (!r || !l) {
       console.error("Container or card template not found");
       return;
     }
-    (n.innerHTML = ""), (l.style.display = "none"), (n.style.display = "none");
-    const f = document.getElementById("flowappz-asa-search-button");
-    (f.type = "button"), f && !e.showSearchButton && (f.style.display = "none");
-    const m = document.getElementById("flowappz-asa-search-input"),
+    (r.innerHTML = ""), (l.style.display = "none"), (r.style.display = "none");
+    const m = document.getElementById("flowappz-asa-search-button");
+    (m.type = "button"), m && !e.showSearchButton && (m.style.display = "none");
+    const d = document.getElementById("flowappz-asa-search-input"),
       E = async () => {
         var g;
-        n.innerHTML = "";
-        const r = m.value,
+        r.innerHTML = "";
+        const o = d.value,
           w =
             (g = document.querySelector("html")) == null
               ? void 0
               : g.getAttribute("data-wf-site");
         if (!w) return;
-        const u = `${BaseUrl}/api/search/getSearchedItems/${w}?searchedItem=${encodeURIComponent(
-          r
+        const u = `${C}/api/search/getSearchedItems/${w}?searchedItem=${encodeURIComponent(
+          o
         )}`;
         try {
           const y = await fetch(u);
           if (!y.ok) throw new Error(`Error: ${y.status}`);
-          const x = (await y.json()).data;
-          (n.style.display = "none"),
-            x.slice(0, e.itemLimit).forEach((i) => {
-              const c = h.find((o) => o.itemCollection === i.index);
+          const k = (await y.json()).data;
+          (r.style.display = "none"),
+            k.slice(0, e.itemLimit).forEach((i) => {
+              const c = h.find((n) => n.itemCollection === i.index);
               if (c)
                 if (c.dataField)
                   try {
-                    const o = JSON.parse(c.dataField),
+                    const n = JSON.parse(c.dataField),
                       a = l.cloneNode(!0);
                     if (
-                      ((n.style.display = "flex"),
+                      ((r.style.display = "flex"),
                       (a.style.display = "flex"),
-                      o.title && i[o.title])
+                      n.title && i[n.title])
                     ) {
                       const t = a.querySelector(
                         '[flowappz-asa-data-field="title"]'
                       );
                       if (t) {
-                        const p = i[o.title].replace(/<\/?[^>]+(>|$)/g, "");
-                        t.innerText = p;
+                        const f = i[n.title].replace(/<\/?[^>]+(>|$)/g, "");
+                        t.innerText = f;
                       }
                     }
                     if (
@@ -92,39 +87,39 @@ const L = async () => {
                       );
                       t && (t.style.display = "none");
                     }
-                    if (o.description && i[o.description]) {
+                    if (n.description && i[n.description]) {
                       const t = a.querySelector(
                         '[flowappz-asa-data-field="description"]'
                       );
                       if (t) {
-                        const p = i[o.description].replace(
+                        const f = i[n.description].replace(
                           /<\/?[^>]+(>|$)/g,
                           ""
                         );
                         if (e != null && e.descriptionLength) {
-                          const b =
-                            p.length > e.descriptionLength
-                              ? p.slice(0, e.descriptionLength) + "..."
-                              : p;
-                          t.innerText = b;
-                        } else t.innerText = p;
+                          const z =
+                            f.length > e.descriptionLength
+                              ? f.slice(0, e.descriptionLength) + "..."
+                              : f;
+                          t.innerText = z;
+                        } else t.innerText = f;
                       }
                     }
-                    if (o.image && i[o.image]) {
+                    if (n.image && i[n.image]) {
                       const t = a.querySelector(
                         '[flowappz-asa-data-field="image"]'
                       );
-                      t && ((t.src = i[o.image].url), (t.srcset = ""));
+                      t && ((t.src = i[n.image].url), (t.srcset = ""));
                     }
-                    const I = a,
-                      d = i[o.link];
-                    d &&
-                      (typeof d == "string"
-                        ? (I.href = d)
-                        : typeof d == "object" && d.url && (I.href = d.url)),
-                      n.appendChild(a);
-                  } catch (o) {
-                    console.error("Error parsing fieldData:", o);
+                    const T = a,
+                      p = i[n.link];
+                    p &&
+                      (typeof p == "string"
+                        ? (T.href = p)
+                        : typeof p == "object" && p.url && (T.href = p.url)),
+                      r.appendChild(a);
+                  } catch (n) {
+                    console.error("Error parsing fieldData:", n);
                   }
                 else
                   console.warn(
@@ -135,32 +130,35 @@ const L = async () => {
           console.error("Error fetching search results:", y);
         }
       };
-    function C(r, w) {
+    function I(o, w) {
       let u;
       return function (...g) {
-        clearTimeout(u), (u = setTimeout(() => r.apply(this, g), w));
+        clearTimeout(u), (u = setTimeout(() => o.apply(this, g), w));
       };
     }
-    f.addEventListener(
+    m.addEventListener(
       "click",
-      C(async (r) => {
-        r.preventDefault(), r.stopPropagation(), await E();
+      I(async (o) => {
+        o.preventDefault(), o.stopPropagation(), await E();
       }, 500)
     );
-    const T = async () => {
+    const $ = async () => {
       console.log("search input changed"),
         e != null &&
           e.autoComplete &&
           e != null &&
           e.minCharacters &&
-          m.value.length >= e.minCharacters &&
+          d.value.length >= e.minCharacters &&
           (await E());
     };
-    m.addEventListener(
-      "input",
-      C(async (r) => {
-        r.preventDefault(), await T();
-      }, 500)
-    );
+    d.addEventListener("keydown", async (o) => {
+      o.key === "Enter" && (o.preventDefault(), await E());
+    }),
+      d.addEventListener(
+        "input",
+        I(async (o) => {
+          o.preventDefault(), await $();
+        }, 500)
+      );
   };
 L();
