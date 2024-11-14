@@ -2,7 +2,7 @@ const C = "https://advanced-search-backend-production.up.railway.app",
   z = async () => {
     var l;
     try {
-      // console.log("This is cdn");
+      console.log("This is cdn");
       const e =
         (l = document.querySelector("html")) == null
           ? void 0
@@ -15,12 +15,12 @@ const C = "https://advanced-search-backend-production.up.railway.app",
       const s = await fetch(`${C}/api/search/getSearchResultSettings/${e}`);
       if (!s.ok) throw new Error("Failed to fetch search result settings");
       const d = (await s.json()).data;
-      b(o, d);
+      v(o, d);
     } catch (e) {
       console.error("Error fetching data:", e);
     }
   },
-  b = (l, e) => {
+  v = (l, e) => {
     console.log("search result settings", e);
     const h = l.data.searchSettings;
     l.data.items.results, console.log("search settings", l.data);
@@ -44,20 +44,20 @@ const C = "https://advanced-search-backend-production.up.railway.app",
             (o.style.display = "none");
           return;
         }
-        const w =
+        const u =
           (g = document.querySelector("html")) == null
             ? void 0
             : g.getAttribute("data-wf-site");
-        if (!w) return;
-        const u = `${C}/api/search/getSearchedItems/${w}?searchedItem=${encodeURIComponent(
+        if (!u) return;
+        const w = `${C}/api/search/getSearchedItems/${u}?searchedItem=${encodeURIComponent(
           r
         )}`;
         try {
-          const y = await fetch(u);
+          const y = await fetch(w);
           if (!y.ok) throw new Error(`Error: ${y.status}`);
-          const L = (await y.json()).data;
+          const b = (await y.json()).data;
           (o.style.display = "none"),
-            L.slice(0, e.itemLimit).forEach((i) => {
+            b.slice(0, e.itemLimit).forEach((i) => {
               const c = h.find((n) => n.itemCollection === i.index);
               if (c)
                 if (c.dataField)
@@ -117,12 +117,12 @@ const C = "https://advanced-search-backend-production.up.railway.app",
                       );
                       t && ((t.src = i[n.image].url), (t.srcset = ""));
                     }
-                    const T = a,
+                    const $ = a,
                       p = i[n.link];
                     p &&
                       (typeof p == "string"
-                        ? (T.href = p)
-                        : typeof p == "object" && p.url && (T.href = p.url)),
+                        ? ($.href = p)
+                        : typeof p == "object" && p.url && ($.href = p.url)),
                       o.appendChild(a);
                   } catch (n) {
                     console.error("Error parsing fieldData:", n);
@@ -136,19 +136,19 @@ const C = "https://advanced-search-backend-production.up.railway.app",
           console.error("Error fetching search results:", y);
         }
       };
-    function I(r, w) {
-      let u;
+    function T(r, u) {
+      let w;
       return function (...g) {
-        clearTimeout(u), (u = setTimeout(() => r.apply(this, g), w));
+        clearTimeout(w), (w = setTimeout(() => r.apply(this, g), u));
       };
     }
     m.addEventListener(
       "click",
-      I(async (r) => {
+      T(async (r) => {
         r.preventDefault(), r.stopPropagation(), await E();
       }, 500)
     );
-    const $ = async () => {
+    const L = async () => {
       console.log("search input changed"),
         e != null &&
           e.autoComplete &&
@@ -157,13 +157,19 @@ const C = "https://advanced-search-backend-production.up.railway.app",
           d.value.length >= e.minCharacters &&
           (await E());
     };
+    let I;
     d.addEventListener("keydown", async (r) => {
-      r.key === "Enter" && (r.preventDefault(), await E());
+      r.key === "Enter" &&
+        (r.preventDefault(),
+        clearTimeout(I),
+        (I = setTimeout(async () => {
+          await E();
+        }, 300)));
     }),
       d.addEventListener(
         "input",
-        I(async (r) => {
-          r.preventDefault(), await $();
+        T(async (r) => {
+          r.preventDefault(), await L();
         }, 500)
       );
   };
