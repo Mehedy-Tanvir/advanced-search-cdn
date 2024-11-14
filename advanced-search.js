@@ -1,65 +1,71 @@
 const C = "https://advanced-search-backend-production.up.railway.app",
-  L = async () => {
-    var s;
+  z = async () => {
+    var l;
     try {
-      console.log("This is cdn");
+      // console.log("This is cdn");
       const e =
-        (s = document.querySelector("html")) == null
+        (l = document.querySelector("html")) == null
           ? void 0
-          : s.getAttribute("data-wf-site");
+          : l.getAttribute("data-wf-site");
       if (!e) throw new Error("Site ID not found");
       const h = await fetch(`${C}/api/search/getSearchSettingsAndItems/${e}`);
       if (!h.ok) throw new Error("Failed to fetch data");
-      const r = await h.json();
-      console.log("search settings", r.data);
-      const l = await fetch(`${C}/api/search/getSearchResultSettings/${e}`);
-      if (!l.ok) throw new Error("Failed to fetch search result settings");
-      const d = (await l.json()).data;
-      b(r, d);
+      const o = await h.json();
+      console.log("search settings", o.data);
+      const s = await fetch(`${C}/api/search/getSearchResultSettings/${e}`);
+      if (!s.ok) throw new Error("Failed to fetch search result settings");
+      const d = (await s.json()).data;
+      b(o, d);
     } catch (e) {
       console.error("Error fetching data:", e);
     }
   },
-  b = (s, e) => {
+  b = (l, e) => {
     console.log("search result settings", e);
-    const h = s.data.searchSettings;
-    s.data.items.results, console.log("search settings", s.data);
-    const r = document.getElementById("flowappz-asa-item-container"),
-      l = document.getElementById("flowappz-asa-card");
-    if (!r || !l) {
+    const h = l.data.searchSettings;
+    l.data.items.results, console.log("search settings", l.data);
+    const o = document.getElementById("flowappz-asa-item-container"),
+      s = document.getElementById("flowappz-asa-card");
+    if (!o || !s) {
       console.error("Container or card template not found");
       return;
     }
-    (r.innerHTML = ""), (l.style.display = "none"), (r.style.display = "none");
+    (o.innerHTML = ""), (s.style.display = "none"), (o.style.display = "none");
     const m = document.getElementById("flowappz-asa-search-button");
     (m.type = "button"), m && !e.showSearchButton && (m.style.display = "none");
     const d = document.getElementById("flowappz-asa-search-input"),
       E = async () => {
         var g;
-        r.innerHTML = "";
-        const o = d.value,
-          w =
-            (g = document.querySelector("html")) == null
-              ? void 0
-              : g.getAttribute("data-wf-site");
+        o.innerHTML = "";
+        const r = d.value;
+        if (r.length < 1) {
+          (o.innerHTML = ""),
+            (s.style.display = "none"),
+            (o.style.display = "none");
+          return;
+        }
+        const w =
+          (g = document.querySelector("html")) == null
+            ? void 0
+            : g.getAttribute("data-wf-site");
         if (!w) return;
         const u = `${C}/api/search/getSearchedItems/${w}?searchedItem=${encodeURIComponent(
-          o
+          r
         )}`;
         try {
           const y = await fetch(u);
           if (!y.ok) throw new Error(`Error: ${y.status}`);
-          const k = (await y.json()).data;
-          (r.style.display = "none"),
-            k.slice(0, e.itemLimit).forEach((i) => {
+          const L = (await y.json()).data;
+          (o.style.display = "none"),
+            L.slice(0, e.itemLimit).forEach((i) => {
               const c = h.find((n) => n.itemCollection === i.index);
               if (c)
                 if (c.dataField)
                   try {
                     const n = JSON.parse(c.dataField),
-                      a = l.cloneNode(!0);
+                      a = s.cloneNode(!0);
                     if (
-                      ((r.style.display = "flex"),
+                      ((o.style.display = "flex"),
                       (a.style.display = "flex"),
                       n.title && i[n.title])
                     ) {
@@ -97,11 +103,11 @@ const C = "https://advanced-search-backend-production.up.railway.app",
                           ""
                         );
                         if (e != null && e.descriptionLength) {
-                          const z =
+                          const x =
                             f.length > e.descriptionLength
                               ? f.slice(0, e.descriptionLength) + "..."
                               : f;
-                          t.innerText = z;
+                          t.innerText = x;
                         } else t.innerText = f;
                       }
                     }
@@ -117,7 +123,7 @@ const C = "https://advanced-search-backend-production.up.railway.app",
                       (typeof p == "string"
                         ? (T.href = p)
                         : typeof p == "object" && p.url && (T.href = p.url)),
-                      r.appendChild(a);
+                      o.appendChild(a);
                   } catch (n) {
                     console.error("Error parsing fieldData:", n);
                   }
@@ -130,16 +136,16 @@ const C = "https://advanced-search-backend-production.up.railway.app",
           console.error("Error fetching search results:", y);
         }
       };
-    function I(o, w) {
+    function I(r, w) {
       let u;
       return function (...g) {
-        clearTimeout(u), (u = setTimeout(() => o.apply(this, g), w));
+        clearTimeout(u), (u = setTimeout(() => r.apply(this, g), w));
       };
     }
     m.addEventListener(
       "click",
-      I(async (o) => {
-        o.preventDefault(), o.stopPropagation(), await E();
+      I(async (r) => {
+        r.preventDefault(), r.stopPropagation(), await E();
       }, 500)
     );
     const $ = async () => {
@@ -151,14 +157,14 @@ const C = "https://advanced-search-backend-production.up.railway.app",
           d.value.length >= e.minCharacters &&
           (await E());
     };
-    d.addEventListener("keydown", async (o) => {
-      o.key === "Enter" && (o.preventDefault(), await E());
+    d.addEventListener("keydown", async (r) => {
+      r.key === "Enter" && (r.preventDefault(), await E());
     }),
       d.addEventListener(
         "input",
-        I(async (o) => {
-          o.preventDefault(), await $();
+        I(async (r) => {
+          r.preventDefault(), await $();
         }, 500)
       );
   };
-L();
+z();
